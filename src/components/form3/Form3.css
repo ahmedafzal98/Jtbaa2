@@ -1,0 +1,37 @@
+@font-face {
+  font-family: "InterBold";
+  src: url("../../fonts/static/Inter_24pt-Bold.ttf");
+}
+
+.form3 {
+  margin-top: 20px;
+  font-family: "InterBold";
+}
+
+.boxStyle {
+  border: 1px solid #ccc;
+  text-align: center;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.boxContaienr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.imgStyle {
+  width: 100px;
+  height: 80px;
+  object-fit: "cover";
+  margin-bottom: 10px;
+}
+.table {
+  border-color: 1px solid orange;
+}
