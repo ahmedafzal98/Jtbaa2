@@ -144,7 +144,6 @@ const Form3 = ({ distance }) => {
     <>
       <div
         style={{
-          height: "100vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",

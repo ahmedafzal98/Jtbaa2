@@ -8,6 +8,7 @@ import {
   useLoadScript,
 } from "@react-google-maps/api";
 import AddressAutocomplete from "../addressAutoComplete/AddressAutocomplete";
+import "./Map.css";
 
 const containerStyle = {
   width: "100%",
@@ -77,9 +78,13 @@ const MapComponent = ({ onDistanceUpdate }) => {
   };
 
   return (
-    <div>
+    <div className="mapContainer">
       <div>
-        <h3 style={{ marginTop: 20 }}>Pickup Address</h3>
+        <h3
+          style={{ marginTop: 20, textAlign: "left", fontFamily: "InterBold" }}
+        >
+          Pickup Address
+        </h3>
         <AddressAutocomplete
           label="Pickup Address"
           onAddressSelect={handlePickupSelect}
@@ -87,7 +92,11 @@ const MapComponent = ({ onDistanceUpdate }) => {
       </div>
 
       <div>
-        <h3 style={{ marginTop: 20 }}>Dropoff Address</h3>
+        <h3
+          style={{ marginTop: 20, textAlign: "left", fontFamily: "InterBold" }}
+        >
+          Dropoff Address
+        </h3>
         <AddressAutocomplete
           label="Dropoff Address"
           onAddressSelect={handleDropoffSelect}
@@ -102,35 +111,48 @@ const MapComponent = ({ onDistanceUpdate }) => {
           padding: 2,
         }}
       >
-        {!isLoaded ? (
+        {!isLoaded && !pickupAddress ? (
           <p>Loading...</p>
         ) : (
-          <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={mapCenter}
-            zoom={14}
-            onLoad={(map) => setMapRef(map)}
-          >
-            {pickupAddress && (
-              <Marker
-                position={{ lat: pickupAddress.lat, lng: pickupAddress.lng }}
-              />
-            )}
-            {dropoffAddress && (
-              <Marker
-                position={{ lat: dropoffAddress.lat, lng: dropoffAddress.lng }}
-              />
-            )}
+          pickupAddress && (
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={mapCenter}
+              zoom={14}
+              onLoad={(map) => setMapRef(map)}
+            >
+              {pickupAddress && (
+                <Marker
+                  position={{ lat: pickupAddress.lat, lng: pickupAddress.lng }}
+                />
+              )}
+              {dropoffAddress && (
+                <Marker
+                  position={{
+                    lat: dropoffAddress.lat,
+                    lng: dropoffAddress.lng,
+                  }}
+                />
+              )}
 
-            {directionsResponse && (
-              <DirectionsRenderer directions={directionsResponse} />
-            )}
-          </GoogleMap>
+              {directionsResponse && (
+                <DirectionsRenderer directions={directionsResponse} />
+              )}
+            </GoogleMap>
+          )
         )}
         <div>
-          {/* Show distance in miles when both pickup and dropoff are selected */}
           {distanceInMiles !== null && (
-            <h1>Distance: {distanceInMiles} miles</h1>
+            <h1
+              style={{
+                marginTop: 10,
+                fontFamily: "InterBold",
+                textAlign: "left",
+              }}
+            >
+              {" "}
+              Distance: {distanceInMiles} miles
+            </h1>
           )}
         </div>
       </div>

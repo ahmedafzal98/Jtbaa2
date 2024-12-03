@@ -127,11 +127,9 @@ const PaymentSection = () => {
           </ul>
         </div>
         <img
-          width={302}
-          height={101}
+          style={{ width: "100%", maxWidth: "302px", height: "auto" }}
           src="https://jtbaa.com/wp-content/uploads/2024/09/VanWithLugger.png"
-          alt=""
-          srcset=""
+          alt="Van"
         />
       </div>
 
