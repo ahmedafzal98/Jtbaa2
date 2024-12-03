@@ -12,7 +12,7 @@ import {
   Paper,
 } from "@mui/material";
 import pickupTruck from "../../assets/pickup-truck.svg";
-import cargoVan from "../../assets/cargo-Van.svg";
+import cargoVan from "../../assets/cargo-van.svg";
 import boxTruck from "../../assets/box-truck.svg";
 import ladder from "../../assets/ladder.svg";
 import labor from "../../assets/labor.png";
