@@ -30,6 +30,9 @@ const MapComponent = ({ onDistanceUpdate }) => {
     googleMapsApiKey: "AIzaSyDwWuccH8dEz-M4F9klwil_-4t-LlwvMgo",
     libraries: ["places"],
   });
+
+  console.log(distanceInMiles);
+  
   const [mapRef, setMapRef] = useState(null);
   // Effect to calculate directions when both pickup and dropoff addresses are selected
   useEffect(() => {

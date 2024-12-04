@@ -24,6 +24,8 @@ import "./Form3.css";
 const Form3 = ({ distance }) => {
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_API_KEY);
 
+  console.log(distance);
+
   const [selectedVehicle, setSelectedVehicle] = useState("");
   const [selectedItemQuality, setSelectedItemQuality] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
@@ -184,7 +186,7 @@ const Form3 = ({ distance }) => {
             onClick={handleLaborChoose}
           >
             <img src={labor} alt="Labor Option" className="imgStyle" />
-            <p>Labor</p>
+            <p>Only Labor</p>
             <input
               type="radio"
               value="laborOption"

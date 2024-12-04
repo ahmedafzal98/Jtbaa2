@@ -8,6 +8,15 @@ const steps = ["Enter Address", "Item Details", "Payment"];
 
 const MultiStepForm = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [formData, setFormData] = useState({
+    name: "",
+    phoneNumber: "",
+    itemName: "",
+    description: "",
+    files: [],
+    address: null,
+    distance: null,
+  });
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -21,14 +30,17 @@ const MultiStepForm = () => {
     setActiveStep(0);
   };
 
+  const handleDistanceUpdate = (distance) => {
+    setFormData((prevData) => ({ ...prevData, distance }));
+  };
   const getStepContent = (step) => {
     switch (step) {
       case 0:
-        return <Form1 />;
+        return <Form1 onDistanceUpdate={handleDistanceUpdate} />;
       case 1:
         return <Form2 />;
       case 2:
-        return <Form3 />;
+        return <Form3 distance={formData.distance} />;
       default:
         return "Unknown step";
     }

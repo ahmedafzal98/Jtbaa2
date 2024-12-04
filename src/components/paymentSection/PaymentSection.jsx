@@ -18,9 +18,7 @@ const PaymentSection = () => {
     distance: null,
   });
 
-  const handleDistanceUpdate = (distance) => {
-    setFormData((prevData) => ({ ...prevData, distance }));
-  };
+
 
   const handleAddressSelect = (data) => {
     setFormData((prevData) => ({ ...prevData, address: data }));
