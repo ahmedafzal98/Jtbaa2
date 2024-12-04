@@ -1,12 +1,18 @@
-// backend/server.js
-const express = require("express");
-const stripe = require("stripe")(import.meta.env.STRIPE_API_KEY);
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import dotenv from "dotenv";
+import Stripe from "stripe";
+
+// Load environment variables from .env file
+dotenv.config();
+
+// Initialize Stripe with your secret key from .env
+const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_API_KEY);
+
 const app = express();
-const cors = require("cors");
-const bodyParser = require("body-parser");
 
-require("dotenv").config();
-
+// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
