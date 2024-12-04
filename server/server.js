@@ -1,9 +1,11 @@
 // backend/server.js
 const express = require("express");
-const stripe = require("stripe")(process.env.STRIPE_API_KEY);
+const stripe = require("stripe")(import.meta.env.STRIPE_API_KEY);
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
+
+require("dotenv").config();
 
 app.use(cors());
 app.use(bodyParser.json());

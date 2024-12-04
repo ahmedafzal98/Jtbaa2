@@ -22,9 +22,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import "./Form3.css";
 
 const Form3 = ({ distance }) => {
-  const stripePromise = loadStripe(
-    "pk_live_51H8R8KH8GKrhT52KgBz59PmWU9rbGYD9j7RYoTXujVuYpUgKr8uQMYRf28PVnzWyDrJHdmiq49FGsJIJLfk0NWrY00f7QP8AfD"
-  );
+  const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_API_KEY);
 
   const [selectedVehicle, setSelectedVehicle] = useState("");
   const [selectedItemQuality, setSelectedItemQuality] = useState("");

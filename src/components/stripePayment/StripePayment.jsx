@@ -9,7 +9,7 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 
 // Set up Stripe outside of the component to avoid reloading on each render
-const stripePromise = loadStripe(process.env.STRIPE_API_KEY);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_API_KEY);
 
 const StripePayment = ({ totalPrice }) => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -106,7 +106,6 @@ const StripePayment = ({ totalPrice }) => {
         }}
       >
         <Grid container spacing={2}>
-          {/* Card Number - handled by Stripe Elements */}
           <Grid item xs={12}>
             <CardElement
               options={{
