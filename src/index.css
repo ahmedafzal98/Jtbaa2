@@ -1,4 +1,11 @@
-* {
+html, body {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  height: 100%; /* Allow full height */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+body {
+  font-family: "InterBold", sans-serif; /* Fallback font in case Inter is not loaded */
 }

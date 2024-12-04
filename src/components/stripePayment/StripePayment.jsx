@@ -9,9 +9,7 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 
 // Set up Stripe outside of the component to avoid reloading on each render
-const stripePromise = loadStripe(
-  "pk_test_51H8R8KH8GKrhT52KpANq9cN6L3diPzls9viXDEXO0AXWlcpgfiu5uZCb7vdZOiBr9GgbiRkq7acILx0Jd1cXQ9HA00zt66FBga"
-); // Replace with your Stripe publishable key
+const stripePromise = loadStripe(process.env.STRIPE_API_KEY);
 
 const StripePayment = ({ totalPrice }) => {
   const [isProcessing, setIsProcessing] = useState(false);

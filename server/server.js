@@ -1,8 +1,6 @@
 // backend/server.js
 const express = require("express");
-const stripe = require("stripe")(
-  "sk_test_51H8R8KH8GKrhT52Ku78vHPoGLQEnIaFs86I3gSJFO06CrzAHvYCTseYCU4fyJXQkHCt8mjIWpVEMexJl2P0HnXCc00yOThbVOT"
-); // use your secret key here
+const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");

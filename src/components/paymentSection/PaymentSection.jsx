@@ -4,6 +4,7 @@ import MapComponent from "../googleMap/Map";
 import "./PaymentSection.css";
 import FormComponent from "../formComponent/Form";
 import Form3 from "../form3/Form3";
+import MultiStepForm from "../multiStepForm/MultiStepForm";
 
 const PaymentSection = () => {
   const [currentForm, setCurrentForm] = useState(1);
@@ -135,8 +136,8 @@ const PaymentSection = () => {
 
       <div className="paymentFormSection">
         <div className="formContainer">
-          {/* Form 1 */}
-          {currentForm === 1 && (
+          <MultiStepForm />
+          {/* {currentForm === 1 && (
             <div className="form1">
               <MapComponent onDistanceUpdate={handleDistanceUpdate} />
               <button
@@ -149,7 +150,6 @@ const PaymentSection = () => {
             </div>
           )}
 
-          {/* Form 2 */}
           {currentForm === 2 && (
             <div className="form2">
               <FormComponent
@@ -167,7 +167,6 @@ const PaymentSection = () => {
             </div>
           )}
 
-          {/* Form 3 */}
           {currentForm === 3 && (
             <div className="form3">
               <Form3 distance={formData.distance} />
@@ -180,7 +179,7 @@ const PaymentSection = () => {
                 </button>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>
