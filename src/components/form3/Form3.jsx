@@ -16,10 +16,10 @@ import cargoVan from "../../assets/cargo-van.svg";
 import boxTruck from "../../assets/box-truck.svg";
 import ladder from "../../assets/ladder.svg";
 import labor from "../../assets/labor.png";
-import StripeWrapper from "../stripePayment/StripePayment";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import "./Form3.css";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import StripeWrapper from "../stripePayment/StripePayment";
 
 const Form3 = ({ distance }) => {
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_API_KEY);
@@ -71,10 +71,6 @@ const Form3 = ({ distance }) => {
     expert: 255, // 2 hours
   };
 
-  const handleVehicleSelect = (vehicle) => {
-    setSelectedVehicle(vehicle);
-  };
-
   const handleQualityChange = (event) => {
     setSelectedItemQuality(event.target.value);
   };
@@ -104,7 +100,7 @@ const Form3 = ({ distance }) => {
   };
 
   const handleStairOptionToggle = (event) => {
-    setIsStairOptionSelected(event.target.checked);
+    setIsStairOptionSelected((prevState) => !prevState);
   };
 
   const getItemPrice = () =>
@@ -142,71 +138,90 @@ const Form3 = ({ distance }) => {
     isStairOptionSelected,
   ]);
 
+  const handleVehicleSelect = (vehicle) => {
+    setSelectedVehicle(vehicle);
+  };
+
   return (
     <>
       <div
         className="container"
         style={{
-          ...(selectedOption === "vehicleOption" && {
-            marginTop: "70%",
-          }),
+          ...(selectedOption === "vehicleOption" &&
+            {
+              // marginTop: "70%",
+            }),
         }}
       >
-        <h2 style={{ marginTop: 30 }}>Select Option</h2>
+        {!selectedOption && <h2 style={{ marginTop: 30 }}>Select Option</h2>}
+        {selectedOption === "" && (
+          <div className="boxContainer">
+            <div
+              className="boxStyle"
+              style={{
+                border:
+                  selectedOption === "vehicleOption"
+                    ? "2px solid #FE5E22"
+                    : "2px solid transparent",
+              }}
+              onClick={handleVehicleChoose}
+            >
+              <img
+                src={pickupTruck}
+                alt="Vehicle Option"
+                className="imgStyle"
+              />
+              <p>Vehicle</p>
+              <input
+                type="radio"
+                value="vehicleOption"
+                checked={isVehicleSelected}
+                onChange={() => {}}
+                className="hiddenRadio"
+              />
+            </div>
+            <div
+              className="boxStyle"
+              style={{
+                border:
+                  selectedOption === "laborOption"
+                    ? "2px solid #FE5E22"
+                    : "2px solid transparent",
+              }}
+              onClick={handleLaborChoose}
+            >
+              <img src={labor} alt="Labor Option" className="imgStyle" />
+              <p>Only Labor</p>
+              <input
+                type="radio"
+                value="laborOption"
+                checked={isLaborSelected}
+                onChange={() => {}}
+                className="hiddenRadio"
+              />
+            </div>
+          </div>
+        )}
 
-        <div className="boxContainer">
-          <div
-            className="boxStyle"
-            style={{
-              border:
-                selectedOption === "vehicleOption"
-                  ? "2px solid #FE5E22"
-                  : "2px solid transparent",
-            }}
-            onClick={handleVehicleChoose}
-          >
-            <img src={pickupTruck} alt="Vehicle Option" className="imgStyle" />
-            <p>Vehicle</p>
-            <input
-              type="radio"
-              value="vehicleOption"
-              checked={isVehicleSelected}
-              onChange={() => {}}
-              className="hiddenRadio"
-            />
-          </div>
-          <div
-            className="boxStyle"
-            style={{
-              border:
-                selectedOption === "laborOption"
-                  ? "2px solid #FE5E22"
-                  : "2px solid transparent",
-            }}
-            onClick={handleLaborChoose}
-          >
-            <img src={labor} alt="Labor Option" className="imgStyle" />
-            <p>Only Labor</p>
-            <input
-              type="radio"
-              value="laborOption"
-              checked={isLaborSelected}
-              onChange={() => {}}
-              className="hiddenRadio"
-            />
-          </div>
-        </div>
-        <p style={{ color: "gray", fontWeight: "bold", marginTop: "18px" }}>
-          Note: Please select a vehicle or labor option.
-        </p>
+        {!selectedOption && (
+          <p style={{ color: "gray", fontWeight: "bold", marginTop: "18px" }}>
+            Note: Please select a vehicle or labor option.
+          </p>
+        )}
         <div className="form3">
           {isVehicleSelected && (
             <>
-              <h2 style={{ textAlign: "left" }}>Select a Vehicle</h2>
+              <h3 style={{ textAlign: "left" }}>Select a Vehicle</h3>
               <div className="boxContainer">
                 <div
                   className="boxStyle"
                   onClick={() => handleVehicleSelect("pickupTruck")}
+                  style={{
+                    border:
+                      selectedVehicle === "pickupTruck"
+                        ? "3px solid #FE5E22"
+                        : "2px solid transparent",
+                  }}
                 >
                   <img
                     src={pickupTruck}
@@ -218,6 +233,12 @@ const Form3 = ({ distance }) => {
                 <div
                   className="boxStyle"
                   onClick={() => handleVehicleSelect("cargoVan")}
+                  style={{
+                    border:
+                      selectedVehicle === "cargoVan"
+                        ? "3px solid #FE5E22"
+                        : "2px solid transparent",
+                  }}
                 >
                   <img src={cargoVan} alt="Cargo Van" className="imgStyle" />
                   <p>Cargo Van</p>
@@ -225,6 +246,12 @@ const Form3 = ({ distance }) => {
                 <div
                   className="boxStyle"
                   onClick={() => handleVehicleSelect("boxTruck")}
+                  style={{
+                    border:
+                      selectedVehicle === "boxTruck"
+                        ? "3px solid #FE5E22"
+                        : "2px solid transparent",
+                  }}
                 >
                   <img src={boxTruck} alt="Box Truck" className="imgStyle" />
                   <p>Box Truck</p>
@@ -250,14 +277,28 @@ const Form3 = ({ distance }) => {
                 </Select>
               </FormControl>
               <div
-                style={{ display: "flex", gap: "20px", marginTop: "20px" }}
-                onChange={handleStairOptionToggle}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 5,
+                }}
               >
-                <div className="boxStyle">
-                  <img src={ladder} alt="Stair Option" className="imgStyle" />
-                  <p>Stair Option</p>
-                  <input type="checkbox" checked={isStairOptionSelected} />
-                </div>
+                <h3>Stair Option</h3>
+                <p>(Optional)</p>
+              </div>
+
+              <div
+                className="boxStyle"
+                onClick={handleStairOptionToggle}
+                style={{
+                  // marginTop: 10,
+                  cursor: "pointer",
+                  border: isStairOptionSelected
+                    ? "3px solid #FE5E22"
+                    : "2px solid transparent",
+                }}
+              >
+                <img src={ladder} alt="Stair Option" className="imgStyle" />
               </div>
               <TableContainer
                 style={{
@@ -270,62 +311,42 @@ const Form3 = ({ distance }) => {
                 <Table>
                   <TableBody>
                     <TableRow>
-                      <TableCell
-                        style={{ fontSize: "18px", fontWeight: "bold" }}
-                      >
+                      <TableCell style={{ fontSize: "18px" }}>
                         Distance In Miles
                       </TableCell>
-                      <TableCell
-                        style={{ fontSize: "18px", fontWeight: "bold" }}
-                      >
+                      <TableCell style={{ fontSize: "18px" }}>
                         {distance && distance}
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell
-                        style={{ fontSize: "18px", fontWeight: "bold" }}
-                      >
+                      <TableCell style={{ fontSize: "18px" }}>
                         Selected Vehicle Price
                       </TableCell>
-                      <TableCell
-                        style={{ fontSize: "18px", fontWeight: "bold" }}
-                      >
+                      <TableCell style={{ fontSize: "18px" }}>
                         {vehiclePrices[selectedVehicle]?.price || "0"}
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell
-                        style={{ fontSize: "18px", fontWeight: "bold" }}
-                      >
+                      <TableCell style={{ fontSize: "18px" }}>
                         Fuel Price Per Mile
                       </TableCell>
-                      <TableCell
-                        style={{ fontSize: "18px", fontWeight: "bold" }}
-                      >
+                      <TableCell style={{ fontSize: "18px" }}>
                         {getFuelPrice() || "0"}
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell
-                        style={{ fontSize: "18px", fontWeight: "bold" }}
-                      >
+                      <TableCell style={{ fontSize: "18px" }}>
                         Item Quantity Price
                       </TableCell>
-                      <TableCell
-                        style={{ fontSize: "18px", fontWeight: "bold" }}
-                      >
+                      <TableCell style={{ fontSize: "18px" }}>
                         {getItemPrice() || "0"}
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell
-                        style={{ fontSize: "18px", fontWeight: "bold" }}
-                      >
+                      <TableCell style={{ fontSize: "18px" }}>
                         Stairs Price
                       </TableCell>
-                      <TableCell
-                        style={{ fontSize: "18px", fontWeight: "bold" }}
-                      >
+                      <TableCell style={{ fontSize: "18px" }}>
                         {getStairsPrice() || "0"}
                       </TableCell>
                     </TableRow>

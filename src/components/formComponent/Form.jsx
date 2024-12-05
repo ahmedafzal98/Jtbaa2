@@ -7,21 +7,17 @@ import {
   Box,
   Typography,
   IconButton,
-  Grid2,
+  Grid,
 } from "@mui/material";
 import { DeleteOutlineRounded } from "@mui/icons-material";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is required"),
-  phoneNumber: Yup.string()
-    .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
-    .required("Phone number is required"),
+  phoneNumber: Yup.string().required("Phone number is required"),
   itemName: Yup.string().required("Item name is required"),
-  description: Yup.string().required("Description is required"),
-  files: Yup.array().min(1, "Please upload at least one file"),
 });
 
-const FormComponent = () => {
+const FormComponent = ({ data, onChange, errors }) => {
   const [images, setImages] = useState([]);
 
   const handleFileChange = (event) => {
@@ -36,64 +32,65 @@ const FormComponent = () => {
   return (
     <Formik
       initialValues={{
-        name: "",
-        phoneNumber: "",
-        itemName: "",
-        description: "",
-        files: [],
+        name: data.name,
+        phoneNumber: data.phoneNumber,
       }}
-      validationSchema={validationSchema}
-      onSubmit={(values) => {
-        console.log("Form submitted", values);
-      }}
+      validationSchema={Yup.object({
+        name: Yup.string().required("name is required"),
+        phoneNumber: Yup.string().required("phoneNumber is required"),
+      })}
     >
-      {({ setFieldValue, errors, touched }) => (
+      {({ values, errors, touched, handleChange, handleBlur }) => (
         <Form>
           <Box>
             <Field
               name="name"
+              as={TextField}
               label="Name"
-              component={TextField}
               fullWidth
               margin="normal"
               variant="outlined"
-              helperText={touched.name && errors.name}
+              onChange={(e) => {
+                handleChange(e);
+                onChange("name", e.target.value);
+              }}
               error={touched.name && Boolean(errors.name)}
+              helperText={touched.name && errors.name}
             />
             <Field
               name="phoneNumber"
+              as={TextField}
               label="Phone Number"
-              component={TextField}
               fullWidth
               margin="normal"
               variant="outlined"
-              helperText={touched.phoneNumber && errors.phoneNumber}
+              onChange={(e) => {
+                handleChange(e);
+                onChange("phoneNumber", e.target.value);
+              }}
               error={touched.phoneNumber && Boolean(errors.phoneNumber)}
+              helperText={touched.phoneNumber && errors.phoneNumber}
             />
             <Field
               name="itemName"
+              as={TextField}
               label="Item Name"
-              component={TextField}
               fullWidth
               margin="normal"
               variant="outlined"
-              helperText={touched.itemName && errors.itemName}
-              error={touched.itemName && Boolean(errors.itemName)}
             />
             <Field
               name="description"
+              as={TextField}
               label="Description"
-              component={TextField}
               fullWidth
               margin="normal"
               variant="outlined"
               multiline
               rows={4}
-              helperText={touched.description && errors.description}
-              error={touched.description && Boolean(errors.description)}
             />
 
-            <Box>
+            <Box mt={2}>
               <Button variant="contained" component="label">
                 Upload Images
                 <input
@@ -104,11 +101,10 @@ const FormComponent = () => {
                   onChange={handleFileChange}
                 />
               </Button>
-
               {images.length > 0 && (
-                <Grid2 container spacing={2} mt={2}>
+                <Grid container spacing={2} mt={2}>
                   {images.map((image, index) => (
-                    <Grid2 item xs={4} key={index} position="relative">
+                    <Grid item xs={4} key={index}>
                       <Box position="relative">
                         <img
                           src={URL.createObjectURL(image)}
@@ -135,9 +131,9 @@ const FormComponent = () => {
                           <DeleteOutlineRounded />
                         </IconButton>
                       </Box>
-                    </Grid2>
+                    </Grid>
                   ))}
-                </Grid2>
+                </Grid>
               )}
             </Box>
           </Box>

@@ -7,9 +7,7 @@
   font-family: "InterBold";
   
 }
-.container {
-  position: relative; /* Ensure it is positioned correctly */
-}
+
 
 .boxContainer {
   display: flex;
@@ -20,7 +18,7 @@
 
 .boxStyle {
   width: 120px;
-  height: 120px;
+  height: 86px;
   border: 1px solid #ccc;
   border-radius: 10px;
   display: flex;
@@ -40,15 +38,14 @@
 }
 
 .imgStyle {
-  width: 80px;
-  height: 80px;
+  width: 76px;
+  height: 34px;
   object-fit: contain;
   /* margin-bottom: 5px; */
 }
 
 p {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 15px;
   margin: 0;
 }
 

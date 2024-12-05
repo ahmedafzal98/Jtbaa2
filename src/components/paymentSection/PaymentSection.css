@@ -8,20 +8,21 @@
 }
 
 .movingDelievery {
+  overflow: hidden;
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
 }
 .movingDelieveryContainer {
   display: flex;
-  height: 50%;
+  height: 70%;
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
   width: 50%;
 }
 .paymentFormSection {
+  overflow: auto;
+  margin-top: 10px;
   width: 50%;
 }
 .formContainer {
