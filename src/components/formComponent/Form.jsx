@@ -41,7 +41,7 @@ const FormComponent = ({ data, onChange, errors }) => {
       })}
     >
       {({ values, errors, touched, handleChange, handleBlur }) => (
-        <Form>
+        <Form style={{ width: "90%" }}>
           <Box>
             <Field
               name="name"

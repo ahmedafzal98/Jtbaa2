@@ -21,15 +21,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100%; /* Full width for mobile */
-  padding: 20px;
-}
-
-.paymentFormSection {
-  height: 100vh;
-  overflow: auto;
-  margin-top: 10px;
-  width: 100%; /* Full width for mobile */
+  width: 100%; 
 }
 
 .formContainer {
@@ -58,6 +50,12 @@
   margin-top: 20px;
   font-family: "InterRegular";
   line-height: 1.5;
+}
+.movingDelieveryContainer img{
+  width: 100%;
+  max-width: 302px;
+  height: auto;
+  margin-top: 20px;
 }
 
 .list li {
@@ -96,9 +94,31 @@
 }
 
 @media (max-width: 500px) {
+  .movingDelievery{
+  overflow-y: scroll;
+  }
+  .movingDelieveryContainer{
+    height: auto;
+  }
   .paymentFormSection {
     width: 100%;
     margin-left: 10px;
+  }
+  .list{
+    display: none;
+  }
+  .deleiverydesc {
+   display: none;
+  }
+  .movingDelieveryContainer .headline {
+    font-size: 25px;
+    text-align: center;
+  }
+  .movingDelieveryContainer img{
+    max-width: 200px;
+  }
+  .formHeading{
+    margin-top: 13%;
   }
 }
 
@@ -107,9 +127,7 @@
   .movingDelievery {
     flex-direction: row;
   }
-  .movingDelieveryContainer {
-    width: 60%; /* Adjust width for tablets */
-  }
+  
   .paymentFormSection {
     width: 40%;
   }

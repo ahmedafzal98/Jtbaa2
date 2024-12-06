@@ -106,7 +106,7 @@ const MultiStepForm = ({ activeStep, setActiveStep }) => {
   };
 
   return (
-    <div className="stepper">
+    <div style={{ marginRight: "10px" }} className="stepper">
       <Box
         sx={{
           width: {
@@ -157,6 +157,8 @@ const MultiStepForm = ({ activeStep, setActiveStep }) => {
                     onClick={handleNext}
                     disabled={isNextDisabled()} // Disable based on the validation
                     style={{
+                      marginRight: "20px",
+                      marginLeft: "10px",
                       cursor: isNextDisabled() ? "not-allowed" : "pointer",
                       backgroundColor: isNextDisabled() ? "#ccc" : "#fe5e22",
                     }}

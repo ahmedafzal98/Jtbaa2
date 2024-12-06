@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   MenuItem,
   Select,
@@ -20,8 +20,10 @@ import "./Form3.css";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import StripeWrapper from "../stripePayment/StripePayment";
+import { MyContext } from "../../context/Context";
 
 const Form3 = ({ distance }) => {
+  const { summaryData, setSummaryData } = useContext(MyContext);
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_API_KEY);
 
   console.log(distance);
@@ -142,6 +144,20 @@ const Form3 = ({ distance }) => {
     setSelectedVehicle(vehicle);
   };
 
+  useEffect(() => {
+    // Calculate table data whenever relevant data changes
+    const tableData = {
+      distance,
+      vehiclePrice: vehiclePrices[selectedVehicle]?.price || "0",
+      fuelPrice: getFuelPrice() || "0",
+      itemPrice: getItemPrice() || "0",
+      stairsPrice: getStairsPrice() || "0",
+      totalPrice,
+      isVehicleSelected,
+    };
+
+    setSummaryData(tableData); // Update the summary data state
+  }, [selectedVehicle, distance, vehiclePrices, totalPrice]);
   return (
     <>
       <div
@@ -300,71 +316,6 @@ const Form3 = ({ distance }) => {
               >
                 <img src={ladder} alt="Stair Option" className="imgStyle" />
               </div>
-              <TableContainer
-                style={{
-                  marginTop: 20,
-                  borderRadius: 10,
-                  border: "2px solid #FE5E22",
-                }}
-                component={Paper}
-              >
-                <Table>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell style={{ fontSize: "18px" }}>
-                        Distance In Miles
-                      </TableCell>
-                      <TableCell style={{ fontSize: "18px" }}>
-                        {distance && distance}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell style={{ fontSize: "18px" }}>
-                        Selected Vehicle Price
-                      </TableCell>
-                      <TableCell style={{ fontSize: "18px" }}>
-                        {vehiclePrices[selectedVehicle]?.price || "0"}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell style={{ fontSize: "18px" }}>
-                        Fuel Price Per Mile
-                      </TableCell>
-                      <TableCell style={{ fontSize: "18px" }}>
-                        {getFuelPrice() || "0"}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell style={{ fontSize: "18px" }}>
-                        Item Quantity Price
-                      </TableCell>
-                      <TableCell style={{ fontSize: "18px" }}>
-                        {getItemPrice() || "0"}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell style={{ fontSize: "18px" }}>
-                        Stairs Price
-                      </TableCell>
-                      <TableCell style={{ fontSize: "18px" }}>
-                        {getStairsPrice() || "0"}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell
-                        style={{ fontSize: "18px", fontWeight: "bold" }}
-                      >
-                        <b>Total Price</b>
-                      </TableCell>
-                      <TableCell
-                        style={{ fontSize: "18px", fontWeight: "bold" }}
-                      >
-                        <b>${totalPrice}</b>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
             </>
           )}
           {isLaborSelected && (

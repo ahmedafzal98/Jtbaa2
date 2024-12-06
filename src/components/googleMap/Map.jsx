@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   GoogleMap,
   useLoadScript,
@@ -35,6 +35,7 @@ const MapComponent = ({ data, errors, onChange }) => {
         (result, status) => {
           if (status === google.maps.DirectionsStatus.OK) {
             setDirectionsResponse(result);
+
             const distance = result.routes[0].legs[0].distance.text;
             const miles = parseFloat(distance.replace(" mi", ""));
             onChange("distance", miles);
@@ -52,6 +53,18 @@ const MapComponent = ({ data, errors, onChange }) => {
       setShowMap(true); // Show the map when pickup address is selected
     }
   };
+
+  // Memoize the center value to prevent unnecessary re-renders of the map
+  const center = useMemo(() => {
+    return data.address
+      ? { lat: data.address.lat, lng: data.address.lng }
+      : { lat: 40.748817, lng: -73.985428 };
+  }, [data.address]);
+
+  // Memoize the directionsResponse to avoid re-fetching directions unnecessarily
+  const directions = useMemo(() => {
+    return directionsResponse;
+  }, [directionsResponse]);
 
   return (
     <div className="mapContainer">
@@ -76,10 +89,10 @@ const MapComponent = ({ data, errors, onChange }) => {
       <div style={{ marginTop: 20, borderRadius: 10 }}>
         {!isLoaded ? (
           <p>Loading...</p>
-        ) : showMap ? ( // Conditionally render the map if showMap is true
+        ) : showMap ? (
           <GoogleMap
             mapContainerStyle={containerStyle}
-            center={{ lat: 40.748817, lng: -73.985428 }}
+            center={center} // Use memoized center value
             zoom={14}
             onLoad={(map) => setMapRef(map)}
           >
@@ -89,6 +102,7 @@ const MapComponent = ({ data, errors, onChange }) => {
                   lat: data.address.lat,
                   lng: data.address.lng,
                 }}
+                animation={null} // Prevent marker animation
               />
             )}
             {data.dropoffAddress && (
@@ -97,11 +111,10 @@ const MapComponent = ({ data, errors, onChange }) => {
                   lat: data.dropoffAddress.lat,
                   lng: data.dropoffAddress.lng,
                 }}
+                animation={null} // Prevent marker animation
               />
             )}
-            {directionsResponse && (
-              <DirectionsRenderer directions={directionsResponse} />
-            )}
+            {directions && <DirectionsRenderer directions={directions} />}
           </GoogleMap>
         ) : null}
       </div>
@@ -113,4 +126,4 @@ const MapComponent = ({ data, errors, onChange }) => {
   );
 };
 
-export default MapComponent;
+export default React.memo(MapComponent); // Memoize the MapComponent to prevent unnecessary re-renders
