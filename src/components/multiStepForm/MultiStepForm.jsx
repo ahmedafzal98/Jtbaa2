@@ -106,61 +106,70 @@ const MultiStepForm = ({ activeStep, setActiveStep }) => {
   };
 
   return (
-    <Box sx={{ width: "50%" }}>
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => (
-          <Step key={index}>
-            <StepLabel error={!!errors[label.toLowerCase().replace(" ", "")]}>
-              {label}
-            </StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      <Box sx={{ mt: 2 }}>
-        {activeStep === steps.length ? (
-          <>
-            <p>All steps completed - you're finished!</p>
-            <div className="buttons">
-              <button className="btnNext" onClick={handleReset}>
-                Reset
-              </button>
-            </div>
-          </>
-        ) : (
-          <>
-            {getStepContent(activeStep)}
-            <div className="buttons">
-              {activeStep !== 0 && (
-                <button
-                  className="btnNext"
-                  onClick={handleBack}
-                  disabled={activeStep === 0}
-                  style={{
-                    cursor: activeStep === 0 ? "not-allowed" : "pointer",
-                    backgroundColor: activeStep === 0 ? "#ccc" : "#fe5e22",
-                  }}
-                >
-                  Previous
+    <div className="stepper">
+      <Box
+        sx={{
+          width: {
+            xs: "100%",
+            sm: "50%",
+          },
+        }}
+      >
+        <Stepper activeStep={activeStep}>
+          {steps.map((label, index) => (
+            <Step key={index}>
+              <StepLabel error={!!errors[label.toLowerCase().replace(" ", "")]}>
+                {label}
+              </StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+        <Box sx={{ mt: 2 }}>
+          {activeStep === steps.length ? (
+            <>
+              <p>All steps completed - you're finished!</p>
+              <div className="buttons">
+                <button className="btnNext" onClick={handleReset}>
+                  Reset
                 </button>
-              )}
-              {activeStep < steps.length - 1 && (
-                <button
-                  className="btnPrev"
-                  onClick={handleNext}
-                  disabled={isNextDisabled()} // Disable based on the validation
-                  style={{
-                    cursor: isNextDisabled() ? "not-allowed" : "pointer",
-                    backgroundColor: isNextDisabled() ? "#ccc" : "#fe5e22",
-                  }}
-                >
-                  Next
-                </button>
-              )}
-            </div>
-          </>
-        )}
+              </div>
+            </>
+          ) : (
+            <>
+              {getStepContent(activeStep)}
+              <div className="buttons">
+                {activeStep !== 0 && (
+                  <button
+                    className="btnNext"
+                    onClick={handleBack}
+                    disabled={activeStep === 0}
+                    style={{
+                      cursor: activeStep === 0 ? "not-allowed" : "pointer",
+                      backgroundColor: activeStep === 0 ? "#ccc" : "#fe5e22",
+                    }}
+                  >
+                    Previous
+                  </button>
+                )}
+                {activeStep < steps.length - 1 && (
+                  <button
+                    className="btnPrev"
+                    onClick={handleNext}
+                    disabled={isNextDisabled()} // Disable based on the validation
+                    style={{
+                      cursor: isNextDisabled() ? "not-allowed" : "pointer",
+                      backgroundColor: isNextDisabled() ? "#ccc" : "#fe5e22",
+                    }}
+                  >
+                    Next
+                  </button>
+                )}
+              </div>
+            </>
+          )}
+        </Box>
       </Box>
-    </Box>
+    </div>
   );
 };
 

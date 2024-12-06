@@ -2,3 +2,10 @@
     font-family: "InterBold";
     src: url('../../fonts/static/Inter_24pt-Bold.ttf');
 }
+
+@media screen and (max-width: 1000px) {
+    .mapContainer {
+        width: 100%;
+    }
+    
+}

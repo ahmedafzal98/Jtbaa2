@@ -7,48 +7,64 @@
   src: url("../../fonts/static/Inter_18pt-Light.ttf");
 }
 
+/* Base styles */
 .movingDelievery {
   overflow: hidden;
   display: flex;
   height: 100vh;
+  flex-direction: column; /* Default for mobile */
 }
+
 .movingDelieveryContainer {
   display: flex;
-  height: 70%;
+  height: 100%;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   flex-direction: column;
-  width: 50%;
+  width: 100%; /* Full width for mobile */
+  padding: 20px;
 }
+
 .paymentFormSection {
+  height: 100vh;
   overflow: auto;
   margin-top: 10px;
-  width: 50%;
+  width: 100%; /* Full width for mobile */
 }
+
 .formContainer {
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  padding: 0 20px; /* Add padding for better spacing */
 }
+
 .movingDelieveryContainer .headline {
   color: #fe5e22;
   text-align: left;
-  font-size: 30px;
+  font-size: 24px; /* Smaller font size for mobile */
   font-family: "InterExtraBold";
 }
+
 .inputText {
-  width: 397px;
+  width: 100%; /* Full width for mobile */
   height: 51px;
+  padding: 10px;
 }
+
 .deleiverydesc {
-  font-size: 17px;
+  font-size: 16px; /* Slightly smaller for mobile */
   text-align: left;
+  margin-top: 20px;
   font-family: "InterRegular";
   line-height: 1.5;
 }
+
 .list li {
+  margin-top: 20px;
   font-family: "InterRegular";
 }
+
 .buttons {
   height: 62px;
   margin-top: 20px;
@@ -57,17 +73,83 @@
   justify-content: center;
   align-items: center;
 }
+
 .btnNext {
   margin-top: 0;
-  width: 50%;
+  width: 100%; /* Full width for mobile */
+  padding: 10px;
+  border: 1px solid #fe5e22;
+  background-color: #fe5e22;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
 }
+
 .btnPrev {
-  width: 50%;
+  width: 100%; /* Full width for mobile */
   color: #fff;
   cursor: pointer;
   height: 50px;
-  margin-left: 10px;
   border: 1px solid #fe5e22;
   background-color: #fe5e22;
   border-radius: 10px;
 }
+
+@media (max-width: 500px) {
+  .paymentFormSection {
+    width: 100%;
+    margin-left: 10px;
+  }
+}
+
+/* Medium screens (Tablets) */
+@media (min-width: 768px) {
+  .movingDelievery {
+    flex-direction: row;
+  }
+  .movingDelieveryContainer {
+    width: 60%; /* Adjust width for tablets */
+  }
+  .paymentFormSection {
+    width: 40%;
+  }
+  .formContainer {
+    padding: 0 40px; /* Add more padding for better spacing */
+  }
+  .movingDelieveryContainer .headline {
+    font-size: 28px;
+  }
+  .deleiverydesc {
+    font-size: 18px;
+  }
+}
+
+/* Large screens (Desktops) */
+@media (min-width: 1024px) {
+  .movingDelievery {
+    justify-content: flex-start; /* Align content to the top */
+    align-items: flex-start; /* Start content from the top */
+    flex-direction: row;
+  }
+  .movingDelieveryContainer {
+    width: 50%;
+    height: auto;
+    margin-top: 0; /* Remove any extra margin */
+  }
+  .paymentFormSection {
+    width: 50%;
+    height: 100vh;
+    margin-top: 0; /* Ensure it starts from the top */
+  }
+  .formContainer {
+    width: 80%; /* Adjust width for better alignment */
+    padding: 0;
+  }
+  .movingDelieveryContainer .headline {
+    font-size: 32px;
+  }
+  .deleiverydesc {
+    font-size: 20px;
+  }
+}
+

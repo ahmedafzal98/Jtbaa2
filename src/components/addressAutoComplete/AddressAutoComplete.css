@@ -27,3 +27,9 @@
   background-color: #fe5e22;
   border-radius: 10px;
 }
+
+@media screen and (max-width: 1000px) {
+  .autoComplete{
+    width: 100%;
+  }
+}
