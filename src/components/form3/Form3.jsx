@@ -169,11 +169,10 @@ const Form3 = ({ distance }) => {
             }),
         }}
       >
-        {!selectedOption && <h2 style={{ marginTop: 30 }}>Select Option</h2>}
         {selectedOption === "" && (
           <div className="boxContainer">
             <div
-              className="boxStyle"
+              className="boxStyle boxStyleLarge"
               style={{
                 border:
                   selectedOption === "vehicleOption"
@@ -185,7 +184,7 @@ const Form3 = ({ distance }) => {
               <img
                 src={pickupTruck}
                 alt="Vehicle Option"
-                className="imgStyle"
+                className="imgStyle imgStyleLarge"
               />
               <p>Vehicle</p>
               <input
@@ -197,7 +196,7 @@ const Form3 = ({ distance }) => {
               />
             </div>
             <div
-              className="boxStyle"
+              className="boxStyle boxStyleLarge"
               style={{
                 border:
                   selectedOption === "laborOption"
@@ -206,7 +205,11 @@ const Form3 = ({ distance }) => {
               }}
               onClick={handleLaborChoose}
             >
-              <img src={labor} alt="Labor Option" className="imgStyle" />
+              <img
+                src={labor}
+                alt="Labor Option"
+                className="imgStyle imgStyleLarge"
+              />
               <p>Only Labor</p>
               <input
                 type="radio"
@@ -227,7 +230,9 @@ const Form3 = ({ distance }) => {
         <div className="form3">
           {isVehicleSelected && (
             <>
-              <h3 style={{ textAlign: "left" }}>Select a Vehicle</h3>
+              <h3 style={{ textAlign: "left", marginTop: "30px" }}>
+                Select a Vehicle
+              </h3>
               <div className="boxContainer">
                 <div
                   className="boxStyle"
@@ -274,7 +279,13 @@ const Form3 = ({ distance }) => {
                 </div>
               </div>
 
-              <h3 style={{ textAlign: "left", marginBottom: 10 }}>
+              <h3
+                style={{
+                  textAlign: "left",
+                  marginBottom: 10,
+                  marginTop: "40px",
+                }}
+              >
                 Select Item Quality
               </h3>
               <FormControl fullWidth>

@@ -4,7 +4,7 @@ import Form1 from "../googleMap/Map";
 import Form2 from "../formComponent/Form";
 import Form3 from "../form3/Form3";
 
-const steps = ["Enter Address", "Item Details", "Payment"];
+const steps = ["Step", "Step", "Step"];
 
 const MultiStepForm = ({ activeStep, setActiveStep }) => {
   const [formData, setFormData] = useState({
@@ -106,7 +106,7 @@ const MultiStepForm = ({ activeStep, setActiveStep }) => {
   };
 
   return (
-    <div style={{ marginRight: "10px" }} className="stepper">
+    <div style={{ marginRight: "10px", marginTop: "30px" }} className="stepper">
       <Box
         sx={{
           width: {

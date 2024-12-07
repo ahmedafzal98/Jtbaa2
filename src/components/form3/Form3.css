@@ -31,6 +31,11 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to each box */
 }
+.boxStyleLarge{
+  width: 200px;
+  height: 150px;
+  margin-top: 20px;
+}
 
 .boxStyle:hover {
   transform: translateY(-5px);
@@ -42,6 +47,10 @@
   height: 34px;
   object-fit: contain;
   /* margin-bottom: 5px; */
+}
+.imgStyleLarge{
+  width: 100px;
+  height: 50px;
 }
 
 p {
@@ -59,4 +68,10 @@ p {
 .tableCellStyle {
   font-size: 26px;
   font-weight: bold;
+}
+@media (max-width: 500px) {
+  .boxStyleLarge{
+    width: 120px;
+    height: 86px;
+  }
 }

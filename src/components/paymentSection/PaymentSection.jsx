@@ -48,8 +48,8 @@ const PaymentSection = () => {
         };
       case 2:
         return {
-          title: "Payment",
-          description: "Enter your payment information",
+          title: "Select Service",
+          // description: "Enter your payment information",
         };
       default:
         return { title: "", description: "" };
@@ -239,7 +239,14 @@ const PaymentSection = () => {
         style={activeStep === 2 ? { overflow: "scroll" } : {}}
         className="paymentFormSection"
       >
-        <div style={{ marginBottom: "30px" }} className="formHeading">
+        <div
+          style={
+            summaryData.isVehicleSelected
+              ? { display: "none" }
+              : { marginBottom: "30px" }
+          }
+          className="formHeading"
+        >
           <h2 style={{ textAlign: "left" }}>{getHeading().title}</h2>
           <p style={{ textAlign: "left", color: "gray", fontSize: "1rem" }}>
             {getHeading().description}
