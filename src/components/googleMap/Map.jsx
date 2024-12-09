@@ -69,7 +69,7 @@ const MapComponent = ({ data, errors, onChange }) => {
   return (
     <div className="mapContainer">
       <div>
-        <h3 style={{ textAlign: "left" }}>Pickup Address</h3>
+        <h3 style={{ textAlign: "left" }}>Pickup Address *</h3>
         <AddressAutocomplete
           label="Pickup Address"
           onAddressSelect={(address) => handleAddressChange("address", address)}
@@ -77,7 +77,7 @@ const MapComponent = ({ data, errors, onChange }) => {
       </div>
 
       <div>
-        <h3 style={{ textAlign: "left" }}>Dropoff Address</h3>
+        <h3 style={{ textAlign: "left" }}>Dropoff Address *</h3>
         <AddressAutocomplete
           label="Dropoff Address"
           onAddressSelect={(address) =>
@@ -85,11 +85,10 @@ const MapComponent = ({ data, errors, onChange }) => {
           }
         />
       </div>
-
       <div style={{ marginTop: 20, borderRadius: 10 }}>
         {!isLoaded ? (
           <p>Loading...</p>
-        ) : showMap ? (
+        ) : (
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={center} // Use memoized center value
@@ -116,11 +115,13 @@ const MapComponent = ({ data, errors, onChange }) => {
             )}
             {directions && <DirectionsRenderer directions={directions} />}
           </GoogleMap>
-        ) : null}
+        )}
       </div>
 
       {data.distance !== null && (
-        <h3 style={{ marginTop: 10 }}>Distance: {data.distance} miles</h3>
+        <h3 style={{ marginTop: 10 }}>
+          Distance: <span className="subHeading">{data.distance} miles</span>
+        </h3>
       )}
     </div>
   );

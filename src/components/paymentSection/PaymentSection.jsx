@@ -39,8 +39,8 @@ const PaymentSection = () => {
         };
       case 1:
         return {
-          title: "Item Details",
-          description: "Enter the details of the item",
+          title: "User & Item Details",
+          description: "Enter the details",
         };
       case 2:
         return {
@@ -237,7 +237,7 @@ const PaymentSection = () => {
       >
         <div
           style={
-            summaryData.isVehicleSelected
+            summaryData.isVehicleSelected || summaryData.isLaborSelected
               ? { display: "none" }
               : { marginBottom: "30px" }
           }

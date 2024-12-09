@@ -152,6 +152,7 @@ const Form3 = ({ distance }) => {
       stairsPrice: getStairsPrice() || "0",
       totalPrice,
       isVehicleSelected,
+      isLaborSelected,
     };
 
     setSummaryData(tableData); // Update the summary data state
@@ -329,9 +330,9 @@ const Form3 = ({ distance }) => {
           )}
           {isLaborSelected && (
             <>
-              <h2 style={{ textAlign: "left" }}>Select Labor Type</h2>
+              <h2 style={{ textAlign: "left" }}>Select Service Duration</h2>
               <FormControl fullWidth>
-                <InputLabel id="labor-type-label">Labor Type</InputLabel>
+                <InputLabel id="labor-type-label">Service Duration</InputLabel>
                 <Select
                   labelId="labor-type-label"
                   value={selectedLaborType}
@@ -358,12 +359,18 @@ const Form3 = ({ distance }) => {
                       <TableCell
                         style={{ fontSize: "18px", fontWeight: "bold" }}
                       >
-                        Labor Price
+                        Duration
                       </TableCell>
                       <TableCell
                         style={{ fontSize: "18px", fontWeight: "bold" }}
                       >
-                        {getLaborPrice() || "0"}
+                        {laborPrices[selectedLaborType] === 75
+                          ? "30 min"
+                          : laborPrices[selectedLaborType] === 145
+                          ? "60 min"
+                          : laborPrices[selectedLaborType] === 255
+                          ? "120 min"
+                          : "0 min"}
                       </TableCell>
                     </TableRow>
 
@@ -383,9 +390,7 @@ const Form3 = ({ distance }) => {
             </>
           )}
         </div>
-        {console.log("Selected Item Quantity:", selectedItemQuantity)}
-        {((isVehicleSelected && totalPrice > 0 && selectedItemQuantity) ||
-          (isLaborSelected && totalPrice > 0)) && (
+        {(isLaborSelected || isVehicleSelected) && (
           <Elements stripe={stripePromise}>
             <StripeWrapper totalPrice={totalPrice} />
           </Elements>

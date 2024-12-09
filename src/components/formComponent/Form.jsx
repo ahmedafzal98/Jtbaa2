@@ -46,7 +46,7 @@ const FormComponent = ({ data, onChange, errors }) => {
             <Field
               name="name"
               as={TextField}
-              label="Name"
+              label="Name *"
               fullWidth
               margin="normal"
               variant="outlined"
@@ -60,7 +60,7 @@ const FormComponent = ({ data, onChange, errors }) => {
             <Field
               name="phoneNumber"
               as={TextField}
-              label="Phone Number"
+              label="Phone Number *"
               fullWidth
               margin="normal"
               variant="outlined"
