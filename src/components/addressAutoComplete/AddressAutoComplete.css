@@ -30,6 +30,6 @@
 
 @media screen and (max-width: 1000px) {
   .autoComplete{
-    width: 90%;
+    width: 100%;
   }
 }

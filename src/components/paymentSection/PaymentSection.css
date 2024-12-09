@@ -30,6 +30,11 @@
   flex-direction: column;
   padding: 0 20px; /* Add padding for better spacing */
 }
+.summary{
+    display: flex;
+    height: 50%;
+    flex-direction: column,
+}
 
 .movingDelieveryContainer .headline {
   color: #fe5e22;
@@ -92,12 +97,24 @@
   background-color: #fe5e22;
   border-radius: 10px;
 }
+@media (min-width: 500px) {
+  .movingDelievery{
+    display: flex;
+    overflow-y: scroll;
+    padding-left: 20px;
 
+  }
+
+.paymentFormSection{
+  margin-top: 10%;
+}
+}
 @media (max-width: 500px) {
   .movingDelievery{
   overflow-y: scroll;
   }
   .movingDelieveryContainer{
+    height: 30%;
     height: auto;
   }
   .paymentFormSection {
@@ -127,9 +144,10 @@
   .movingDelievery {
     flex-direction: row;
   }
+
   
   .paymentFormSection {
-    width: 40%;
+    width: 100%;
   }
   .formContainer {
     padding: 0 40px; /* Add more padding for better spacing */
@@ -138,13 +156,15 @@
     font-size: 28px;
   }
   .deleiverydesc {
-    font-size: 18px;
+    width: 90%;
+    font-size: 16px;
   }
 }
 
 /* Large screens (Desktops) */
 @media (min-width: 1024px) {
   .movingDelievery {
+    overflow: hidden;
     justify-content: flex-start; /* Align content to the top */
     align-items: flex-start; /* Start content from the top */
     flex-direction: row;
@@ -155,6 +175,7 @@
     margin-top: 0; /* Remove any extra margin */
   }
   .paymentFormSection {
+    overflow-y: scroll;
     width: 50%;
     height: 100vh;
     margin-top: 0; /* Ensure it starts from the top */
@@ -167,7 +188,7 @@
     font-size: 32px;
   }
   .deleiverydesc {
-    font-size: 20px;
+    font-size: 17px;
   }
 }
 

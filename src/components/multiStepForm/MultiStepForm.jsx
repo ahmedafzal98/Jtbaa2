@@ -4,6 +4,8 @@ import Form1 from "../googleMap/Map";
 import Form2 from "../formComponent/Form";
 import Form3 from "../form3/Form3";
 
+import "./MultiStepForm.css";
+
 const steps = ["Step", "Step", "Step"];
 
 const MultiStepForm = ({ activeStep, setActiveStep }) => {
@@ -110,8 +112,7 @@ const MultiStepForm = ({ activeStep, setActiveStep }) => {
       <Box
         sx={{
           width: {
-            xs: "100%",
-            sm: "50%",
+            xs: "90%",
           },
         }}
       >

@@ -96,9 +96,8 @@ const PaymentSection = () => {
               On-demand Moving <br /> And Delivery
             </span>
             <span className="deleiverydesc">
-              JTBAA is the easiest way to move anything. Fully insured. On{" "}
-              <br />
-              your schedule. Arriving in as little as 30 minutes.&nbsp;
+              JTBAA is the easiest way to move anything. Fully insured. On your
+              schedule. Arriving in as little as 30 minutes.&nbsp;
             </span>
             <div>
               <ul className="list">
