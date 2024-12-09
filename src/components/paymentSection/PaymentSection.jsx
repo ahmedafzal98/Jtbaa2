@@ -19,8 +19,6 @@ import {
 const PaymentSection = () => {
   const { summaryData } = useContext(MyContext);
 
-  console.log("SummaryData", summaryData);
-
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
     name: "",
@@ -31,8 +29,6 @@ const PaymentSection = () => {
     address: null,
     distance: null,
   });
-
-  console.log(activeStep);
 
   const getHeading = () => {
     switch (activeStep) {
@@ -162,6 +158,7 @@ const PaymentSection = () => {
           >
             <TableContainer
               style={{
+                backgroundColo: "red",
                 position: "sticky",
                 bottom: 0, // Stick to the bottom of the viewport
                 marginTop: 20,

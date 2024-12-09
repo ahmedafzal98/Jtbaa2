@@ -26,10 +26,8 @@ const Form3 = ({ distance }) => {
   const { summaryData, setSummaryData } = useContext(MyContext);
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_API_KEY);
 
-  console.log(distance);
-
   const [selectedVehicle, setSelectedVehicle] = useState("");
-  const [selectedItemQuality, setSelectedItemQuality] = useState("");
+  const [selectedItemQuantity, setSelectedItemQuantity] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedLaborType, setSelectedLaborType] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
@@ -73,8 +71,8 @@ const Form3 = ({ distance }) => {
     expert: 255, // 2 hours
   };
 
-  const handleQualityChange = (event) => {
-    setSelectedItemQuality(event.target.value);
+  const handleQuantityChange = (event) => {
+    setSelectedItemQuantity(event.target.value);
   };
 
   const handleOptionChange = (event) => {
@@ -93,7 +91,7 @@ const Form3 = ({ distance }) => {
     setIsVehicleSelected(false);
     setSelectedOption("laborOption");
     setSelectedVehicle(""); // Reset selected vehicle
-    setSelectedItemQuality(""); // Reset item quality
+    setSelectedItemQuantity(""); // Reset item Quantity
     setTotalPrice(0); // Reset total price
   };
 
@@ -107,7 +105,7 @@ const Form3 = ({ distance }) => {
 
   const getItemPrice = () =>
     selectedVehicle
-      ? vehiclePrices[selectedVehicle].itemPrices[selectedItemQuality] || 0
+      ? vehiclePrices[selectedVehicle].itemPrices[selectedItemQuantity] || 0
       : 0;
 
   const getFuelPrice = () =>
@@ -133,7 +131,7 @@ const Form3 = ({ distance }) => {
     setTotalPrice(Math.round(calculateTotalPrice()));
   }, [
     selectedVehicle,
-    selectedItemQuality,
+    selectedItemQuantity,
     selectedOption,
     distance,
     selectedLaborType,
@@ -158,6 +156,7 @@ const Form3 = ({ distance }) => {
 
     setSummaryData(tableData); // Update the summary data state
   }, [selectedVehicle, distance, vehiclePrices, totalPrice]);
+
   return (
     <>
       <div
@@ -221,7 +220,6 @@ const Form3 = ({ distance }) => {
             </div>
           </div>
         )}
-
         {!selectedOption && (
           <p style={{ color: "gray", fontWeight: "bold", marginTop: "18px" }}>
             Note: Please select a vehicle or labor option.
@@ -286,15 +284,15 @@ const Form3 = ({ distance }) => {
                   marginTop: "40px",
                 }}
               >
-                Select Item Quality
+                Select Item Quantity
               </h3>
               <FormControl fullWidth>
-                <InputLabel id="item-quality-label">Item Quality</InputLabel>
+                <InputLabel id="item-Quantity-label">Item Quantity</InputLabel>
                 <Select
-                  labelId="item-quality-label"
-                  value={selectedItemQuality}
-                  label="Item Quality"
-                  onChange={handleQualityChange}
+                  labelId="item-Quantity-label"
+                  value={selectedItemQuantity}
+                  label="Item Quantity"
+                  onChange={handleQuantityChange}
                 >
                   <MenuItem value="1-5 items">1-5 items</MenuItem>
                   <MenuItem value="6 to 10 items">6 to 10 items</MenuItem>
@@ -385,8 +383,9 @@ const Form3 = ({ distance }) => {
             </>
           )}
         </div>
-
-        {(isLaborSelected || isVehicleSelected) && totalPrice > 0 && (
+        {console.log("Selected Item Quantity:", selectedItemQuantity)}
+        {((isVehicleSelected && totalPrice > 0 && selectedItemQuantity) ||
+          (isLaborSelected && totalPrice > 0)) && (
           <Elements stripe={stripePromise}>
             <StripeWrapper totalPrice={totalPrice} />
           </Elements>

@@ -11,11 +11,9 @@ import { loadStripe } from "@stripe/stripe-js";
 // Set up Stripe outside of the component to avoid reloading on each render
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_API_KEY);
 
-const StripePayment = ({ totalPrice }) => {
+const StripePayment = ({ totalPrice, data, required }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  console.log(totalPrice);
 
   const stripe = useStripe();
   const elements = useElements();
@@ -44,9 +42,6 @@ const StripePayment = ({ totalPrice }) => {
       setIsProcessing(false);
       return;
     }
-
-    console.log("Payment Method:", paymentMethod);
-    // Simulate processing (you can replace this with your API call to create a payment intent)
 
     try {
       const response = await fetch(
