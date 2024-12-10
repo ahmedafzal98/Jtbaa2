@@ -100,7 +100,7 @@
 @media (min-width: 500px) {
   .movingDelievery{
     display: flex;
-    overflow-y: scroll;
+    overflow-y: hidden;
     padding-left: 20px;
 
   }
@@ -175,7 +175,7 @@
     margin-top: 0; /* Remove any extra margin */
   }
   .paymentFormSection {
-    overflow-y: scroll;
+    overflow-y: hidden;
     width: 50%;
     height: 100vh;
     margin-top: 0; /* Ensure it starts from the top */
