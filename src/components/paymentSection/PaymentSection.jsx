@@ -231,10 +231,7 @@ const PaymentSection = () => {
           </div>
         )}
       </div>
-      <div
-        style={activeStep === 2 ? { overflow: "scroll" } : {}}
-        className="paymentFormSection"
-      >
+      <div className="paymentFormSection">
         <div
           style={
             summaryData.isVehicleSelected || summaryData.isLaborSelected

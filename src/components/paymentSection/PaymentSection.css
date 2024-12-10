@@ -9,9 +9,8 @@
 
 /* Base styles */
 .movingDelievery {
-  overflow: hidden;
   display: flex;
-  height: 100vh;
+  height: 100%;
   flex-direction: column; /* Default for mobile */
 }
 
@@ -22,6 +21,10 @@
   justify-content: center;
   flex-direction: column;
   width: 100%; 
+}
+.paymentFormSection{
+  height: fit-content !important;
+  overflow: hidden;
 }
 
 .formContainer {
