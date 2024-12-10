@@ -13,7 +13,28 @@ const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_API_KEY);
 const app = express();
 
 // Middleware
-app.use(cors());
+// List of allowed origins
+const allowedOrigins = [
+  'https://jtbaa.com',
+  'https://booking.jtbaa.com',
+  'http://localhost:5000', // For local development
+];
+
+// Configure CORS middleware
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g., mobile apps or Postman)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+    credentials: true, // Allow cookies or credentials
+  })
+)
 app.use(bodyParser.json());
 
 app.post("/create-payment-intent", async (req, res) => {
@@ -25,8 +46,8 @@ app.post("/create-payment-intent", async (req, res) => {
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount, // Amount in cents
-      currency: "usd", // Your currency code
+      amount: amount,
+      currency: "usd",
     });
 
     res.send({
