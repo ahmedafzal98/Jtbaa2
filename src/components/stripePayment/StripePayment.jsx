@@ -45,15 +45,16 @@ const StripePayment = ({ totalPrice, data, required }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/create-payment-intent",
+        "https://bookings.jtbaa.com/create-payment-intent",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount: totalPrice }), // Example amount in cents
+          body: JSON.stringify({ amount: totalPrice }),
         }
       );
 
       const { clientSecret } = await response.json();
+      console.log(totalPrice);
 
       if (!clientSecret) {
         setErrorMessage("Failed to retrieve client secret.");
