@@ -19,22 +19,27 @@ app.use(bodyParser.json());
 app.post("/create-payment-intent", async (req, res) => {
   const { amount } = req.body;
 
+  // Validate the amount received in the backend
   if (!amount || amount <= 0) {
     return res.status(400).send({ error: "Invalid payment amount" });
   }
 
   try {
+    // Stripe expects amount in cents for USD
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount,
+      amount: Math.round(amount * 100), // Convert dollars to cents
       currency: "usd",
     });
+
+    console.log("Amount received in dollars:", amount);
+    console.log("Amount sent to Stripe in cents:", amount * 100);
 
     res.send({
       clientSecret: paymentIntent.client_secret,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).send({ error });
+    console.error("Error creating payment intent:", error);
+    res.status(500).send({ error: "Failed to create payment intent" });
   }
 });
 
