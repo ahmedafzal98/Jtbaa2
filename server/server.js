@@ -8,9 +8,7 @@ import Stripe from "stripe";
 dotenv.config();
 
 // Initialize Stripe with your secret key from .env
-const stripe = new Stripe(
-  "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"
-);
+const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_API_KEY);
 
 const app = express();
 
