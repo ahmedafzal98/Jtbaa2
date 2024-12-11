@@ -45,7 +45,7 @@ const StripePayment = ({ totalPrice, data, required }) => {
 
     try {
       const response = await fetch(
-        "https://bookings.jtbaa.com/create-payment-intent",
+        "https://jtbaa2.vercel.app/create-payment-intent",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -75,7 +75,7 @@ const StripePayment = ({ totalPrice, data, required }) => {
       }
     } catch (error) {
       setErrorMessage("Payment failed.");
-      console.error(err);
+      // console.error(err);
     } finally {
       setIsProcessing(false);
     }
