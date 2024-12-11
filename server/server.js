@@ -8,7 +8,9 @@ import Stripe from "stripe";
 dotenv.config();
 
 // Initialize Stripe with your secret key from .env
-const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_API_KEY);
+const stripe = new Stripe(
+  "pk_live_51H8R8KH8GKrhT52KgBz59PmWU9rbGYD9j7RYoTXujVuYpUgKr8uQMYRf28PVnzWyDrJHdmiq49FGsJIJLfk0NWrY00f7QP8AfD"
+);
 
 const app = express();
 
@@ -25,7 +27,7 @@ app.post("/create-payment-intent", async (req, res) => {
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 1,
+      amount: amount,
       currency: "usd",
     });
 
