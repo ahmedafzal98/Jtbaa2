@@ -74,7 +74,7 @@ const StripePayment = ({ totalPrice, data, required }) => {
         alert("Payment successful!");
       }
     } catch (error) {
-      setErrorMessage("Payment failed.");
+      setErrorMessage("Payment Test.");
       // console.error(err);
     } finally {
       setIsProcessing(false);
