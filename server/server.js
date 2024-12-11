@@ -9,7 +9,7 @@ dotenv.config();
 
 // Initialize Stripe with your secret key from .env
 const stripe = new Stripe(
-  "pk_live_51H8R8KH8GKrhT52KgBz59PmWU9rbGYD9j7RYoTXujVuYpUgKr8uQMYRf28PVnzWyDrJHdmiq49FGsJIJLfk0NWrY00f7QP8AfD"
+  "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"
 );
 
 const app = express();
