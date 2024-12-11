@@ -36,7 +36,7 @@ app.post("/create-payment-intent", async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({ error: "PaymentIntent creation failed" });
+    res.status(500).send({ error });
   }
 });
 
