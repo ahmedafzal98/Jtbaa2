@@ -85,9 +85,6 @@ const StripePayment = ({ totalPrice, data, required }) => {
       });
       if (error) {
         setErrorMessage(error.message);
-      } else {
-        alert("Payment successful!");
-
         emailjs
           .sendForm(
             process.env.VITE_EMAILJS_SERVICE_ID,
@@ -105,6 +102,8 @@ const StripePayment = ({ totalPrice, data, required }) => {
               setIsError(true);
             })
           );
+      } else {
+        alert("Payment successful!");
       }
     } catch (error) {
       setErrorMessage("Payment failed.");
