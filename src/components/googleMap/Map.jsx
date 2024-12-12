@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useContext } from "react";
 import {
   GoogleMap,
   useLoadScript,
@@ -7,6 +7,8 @@ import {
 } from "@react-google-maps/api";
 import AddressAutocomplete from "../addressAutoComplete/AddressAutocomplete";
 import "./Map.css";
+import { MyContext } from "../../context/Context";
+import emailjs from "@emailjs/browser";
 
 const containerStyle = {
   width: "100%",
@@ -14,14 +16,19 @@ const containerStyle = {
 };
 
 const MapComponent = ({ data, errors, onChange }) => {
+  const { summaryData, setSummaryData } = useContext(MyContext);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyDwWuccH8dEz-M4F9klwil_-4t-LlwvMgo",
     libraries: ["places"],
   });
 
   const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState({
+    pickupAddress: "",
+    dropoffAddress: "",
+  });
   const [mapRef, setMapRef] = useState(null);
-  const [showMap, setShowMap] = useState(false); // State to track if the map should be shown
+  const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {
     if (data.address && data.dropoffAddress) {
@@ -48,11 +55,28 @@ const MapComponent = ({ data, errors, onChange }) => {
   }, [data.address, data.dropoffAddress, onChange]);
 
   const handleAddressChange = (key, address) => {
+    if (key === "address") {
+      setSelectedAddress((prevState) => ({
+        ...prevState,
+        pickupAddress: address,
+      }));
+    }
+    if (key === "dropoffAddress") {
+      setSelectedAddress((prevState) => ({
+        ...prevState,
+        dropoffAddress: address,
+      }));
+    }
+
     onChange(key, address);
     if (key === "address" && address) {
       setShowMap(true); // Show the map when pickup address is selected
     }
   };
+
+  useEffect(() => {
+    setSummaryData(selectedAddress);
+  }, [selectedAddress]);
 
   // Memoize the center value to prevent unnecessary re-renders of the map
   const center = useMemo(() => {

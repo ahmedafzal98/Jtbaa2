@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, TextField, Grid, CircularProgress } from "@mui/material";
+import emailjs from "emailjs-com";
 import {
   Elements,
   CardElement,
@@ -7,6 +8,7 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { MyContext } from "../../context/Context";
 
 // Set up Stripe outside of the component to avoid reloading on each render
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_API_KEY);
@@ -14,9 +16,22 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_API_KEY);
 const StripePayment = ({ totalPrice, data, required }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { summaryData, setSummaryData } = useContext(MyContext);
+  const [isSent, setIsSent] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const stripe = useStripe();
   const elements = useElements();
+
+  const emailData = {
+    distance: summaryData.distance,
+    vehiclePrice: summaryData.vehiclePrice,
+    fuelPrice: summaryData.fuelPrice,
+    itemPrice: summaryData.itemPrice,
+    stairsPrice: summaryData.stairsPrice,
+    totalPrice: summaryData.totalPrice,
+    selectedVehicle: summaryData.selectedVehicle,
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -72,6 +87,24 @@ const StripePayment = ({ totalPrice, data, required }) => {
         setErrorMessage(error.message);
       } else {
         alert("Payment successful!");
+
+        emailjs
+          .sendForm(
+            process.env.VITE_EMAILJS_SERVICE_ID,
+            process.env.VITE_EMAILJS_TEMPLATE_ID,
+            emailData,
+            process.env.VITE_EMAILJS_SERVICE_ID
+          )
+          .then(
+            (result) => {
+              console.log(result.text);
+              setIsSent(true);
+            },
+            error((error) => {
+              console.log(error);
+              setIsError(true);
+            })
+          );
       }
     } catch (error) {
       setErrorMessage("Payment failed.");

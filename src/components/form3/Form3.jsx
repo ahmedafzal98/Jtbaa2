@@ -35,6 +35,9 @@ const Form3 = ({ distance }) => {
   const [isStairOptionSelected, setIsStairOptionSelected] = useState(false);
   const [isLaborSelected, setIsLaborSelected] = useState(false);
 
+
+  console.log(summaryData);
+
   const vehiclePrices = {
     pickupTruck: {
       price: 35,
@@ -153,6 +156,7 @@ const Form3 = ({ distance }) => {
       totalPrice,
       isVehicleSelected,
       isLaborSelected,
+      selectedVehicle,
     };
 
     setSummaryData(tableData); // Update the summary data state
