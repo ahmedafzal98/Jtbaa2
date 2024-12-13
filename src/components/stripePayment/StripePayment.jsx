@@ -23,15 +23,6 @@ const StripePayment = ({ totalPrice, data, required }) => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const emailData = {
-    distance: summaryData.distance,
-    vehiclePrice: summaryData.vehiclePrice,
-    fuelPrice: summaryData.fuelPrice,
-    itemPrice: summaryData.itemPrice,
-    stairsPrice: summaryData.stairsPrice,
-    totalPrice: summaryData.totalPrice,
-    selectedVehicle: summaryData.selectedVehicle,
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -85,28 +76,50 @@ const StripePayment = ({ totalPrice, data, required }) => {
       });
       if (error) {
         setErrorMessage(error.message);
-        emailjs
-          .sendForm(
-            process.env.VITE_EMAILJS_SERVICE_ID,
-            process.env.VITE_EMAILJS_TEMPLATE_ID,
-            emailData,
-            process.env.VITE_EMAILJS_SERVICE_ID
-          )
-          .then(
-            (result) => {
-              console.log(result.text);
-              setIsSent(true);
-            },
-            error((error) => {
-              console.log(error);
-              setIsError(true);
-            })
-          );
       } else {
         alert("Payment successful!");
+
+        const emailData = summaryData.isLaborSelected
+          ? {
+              laborPrice: `$${summaryData.laborPrice || 0}`,
+              distance: "",
+              selectedVehicle: "",
+              vehiclePrice: "",
+              fuelPrice: "",
+              itemPrice: "",
+              stairsPrice: "",
+              totalPrice: `$${summaryData.totalPrice || 0}`,
+            }
+          : {
+              laborPrice: "",
+              distance: `${summaryData.distance || "N/A"} miles`,
+              selectedVehicle: summaryData.selectedVehicle || "N/A",
+              vehiclePrice: `$${summaryData.vehiclePrice || 0}`,
+              fuelPrice: `$${summaryData.fuelPrice || 0}`,
+              itemPrice: `$${summaryData.itemPrice || 0}`,
+              stairsPrice: `$${summaryData.stairsPrice || 0}`,
+              totalPrice: `$${summaryData.totalPrice || 0}`,
+            };
+
+        emailjs
+          .send(
+            import.meta.env.VITE_EMAILJS_SERVICE_ID,
+            import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+            emailData,
+            import.meta.env.VITE_EMAILJS_USER_ID
+          )
+          .then((result) => {
+            console.log(result.text); // Log the result for debugging
+            setIsSent(true); // Update UI to show success message
+          })
+          .catch((error) => {
+            console.log(error); // Log any error for debugging
+            setIsError(true); // Update UI to show error message
+          });
       }
     } catch (error) {
       setErrorMessage("Payment failed.");
+
       // console.error(err);
     } finally {
       setIsProcessing(false);
@@ -160,7 +173,6 @@ const StripePayment = ({ totalPrice, data, required }) => {
         <div style={{ color: "red", marginBottom: "20px" }}>{errorMessage}</div>
       )}
 
-      {/* Submit Button */}
       <Button
         onClick={handleSubmit}
         variant="contained"

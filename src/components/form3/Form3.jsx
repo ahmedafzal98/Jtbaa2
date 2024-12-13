@@ -34,9 +34,7 @@ const Form3 = ({ distance }) => {
   const [isVehicleSelected, setIsVehicleSelected] = useState(false);
   const [isStairOptionSelected, setIsStairOptionSelected] = useState(false);
   const [isLaborSelected, setIsLaborSelected] = useState(false);
-
-
-  console.log(summaryData);
+  const [laborPrice, setLaborPrice] = useState();
 
   const vehiclePrices = {
     pickupTruck: {
@@ -49,7 +47,7 @@ const Form3 = ({ distance }) => {
       fuelPrice: 2.5,
     },
     cargoVan: {
-      price: 55,
+      price: 80,
       itemPrices: {
         "1-5 items": 75,
         "6 to 10 items": 105,
@@ -58,7 +56,7 @@ const Form3 = ({ distance }) => {
       fuelPrice: 3,
     },
     boxTruck: {
-      price: 75,
+      price: 100,
       itemPrices: {
         "1-5 items": 90,
         "6 to 10 items": 150,
@@ -127,6 +125,8 @@ const Form3 = ({ distance }) => {
     const stairsPrice = getStairsPrice() || 0;
     const laborPrice = getLaborPrice() || 0;
 
+    setLaborPrice(laborPrice);
+
     return vehiclePrice + fuelPrice + itemPrice + stairsPrice + laborPrice;
   };
 
@@ -157,6 +157,7 @@ const Form3 = ({ distance }) => {
       isVehicleSelected,
       isLaborSelected,
       selectedVehicle,
+      laborPrice,
     };
 
     setSummaryData(tableData); // Update the summary data state
