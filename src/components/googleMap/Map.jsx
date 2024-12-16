@@ -9,6 +9,7 @@ import AddressAutocomplete from "../addressAutoComplete/AddressAutocomplete";
 import "./Map.css";
 import { MyContext } from "../../context/Context";
 import emailjs from "@emailjs/browser";
+import AddressContext from "../../context/addressContext/addressContext";
 
 const containerStyle = {
   width: "100%",
@@ -17,6 +18,9 @@ const containerStyle = {
 
 const MapComponent = ({ data, errors, onChange }) => {
   const { summaryData, setSummaryData } = useContext(MyContext);
+  const { address, setAddress } = useContext(AddressContext);
+
+  const { pickupAddress, dropOffAddress } = address;
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyDwWuccH8dEz-M4F9klwil_-4t-LlwvMgo",
     libraries: ["places"],
@@ -31,7 +35,7 @@ const MapComponent = ({ data, errors, onChange }) => {
   const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {
-    if (data.address && data.dropoffAddress) {
+    if (isLoaded && data.address && data.dropoffAddress) {
       const directionsService = new google.maps.DirectionsService();
       directionsService.route(
         {
@@ -52,20 +56,14 @@ const MapComponent = ({ data, errors, onChange }) => {
         }
       );
     }
-  }, [data.address, data.dropoffAddress, onChange]);
+  }, [isLoaded, data.address, data.dropoffAddress, onChange]);
 
   const handleAddressChange = (key, address) => {
     if (key === "address") {
-      setSelectedAddress((prevState) => ({
-        ...prevState,
-        pickupAddress: address,
-      }));
+      setAddress((prev) => ({ ...prev, pickupAddress: address }));
     }
     if (key === "dropoffAddress") {
-      setSelectedAddress((prevState) => ({
-        ...prevState,
-        dropoffAddress: address,
-      }));
+      setAddress((prev) => ({ ...prev, dropOffAddress: address }));
     }
 
     onChange(key, address);
@@ -80,9 +78,10 @@ const MapComponent = ({ data, errors, onChange }) => {
 
   // Memoize the center value to prevent unnecessary re-renders of the map
   const center = useMemo(() => {
-    return data.address
-      ? { lat: data.address.lat, lng: data.address.lng }
-      : { lat: 40.748817, lng: -73.985428 };
+    if (data.address?.lat && data.address?.lng) {
+      return { lat: data.address.lat, lng: data.address.lng };
+    }
+    return { lat: 40.748817, lng: -73.985428 }; // Default to NYC
   }, [data.address]);
 
   // Memoize the directionsResponse to avoid re-fetching directions unnecessarily
@@ -111,32 +110,35 @@ const MapComponent = ({ data, errors, onChange }) => {
       </div>
       <div style={{ marginTop: 20, borderRadius: 10 }}>
         {!isLoaded ? (
-          <p>Loading...</p>
+          <p>Loading...</p> // Show a loading state if the script isn't loaded
         ) : (
           <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center} // Use memoized center value
-            zoom={14}
-            onLoad={(map) => setMapRef(map)}
+            mapContainerStyle={containerStyle} // Style for the map container
+            center={center} // Memoized center coordinates
+            zoom={14} // Default zoom level
+            onLoad={(map) => setMapRef(map)} // Callback when the map is loaded
           >
+            {/* Marker for the pickup address */}
             {data.address && (
               <Marker
                 position={{
                   lat: data.address.lat,
                   lng: data.address.lng,
                 }}
-                animation={null} // Prevent marker animation
+                animation={null} // Disable marker animation
               />
             )}
+            {/* Marker for the dropoff address */}
             {data.dropoffAddress && (
               <Marker
                 position={{
                   lat: data.dropoffAddress.lat,
                   lng: data.dropoffAddress.lng,
                 }}
-                animation={null} // Prevent marker animation
+                animation={null} // Disable marker animation
               />
             )}
+            {/* Render directions if available */}
             {directions && <DirectionsRenderer directions={directions} />}
           </GoogleMap>
         )}

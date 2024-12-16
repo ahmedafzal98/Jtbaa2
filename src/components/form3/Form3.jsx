@@ -21,10 +21,15 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import StripeWrapper from "../stripePayment/StripePayment";
 import { MyContext } from "../../context/Context";
+import AddressContext from "../../context/addressContext/addressContext";
+import { FormContext } from "../../context/formContext/FormContext";
 
 const Form3 = ({ distance }) => {
   const { summaryData, setSummaryData } = useContext(MyContext);
+  const { formData } = useContext(FormContext);
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_API_KEY);
+
+  console.log(formData);
 
   const [selectedVehicle, setSelectedVehicle] = useState("");
   const [selectedItemQuantity, setSelectedItemQuantity] = useState("");
@@ -35,6 +40,8 @@ const Form3 = ({ distance }) => {
   const [isStairOptionSelected, setIsStairOptionSelected] = useState(false);
   const [isLaborSelected, setIsLaborSelected] = useState(false);
   const [laborPrice, setLaborPrice] = useState();
+
+  const { address } = useContext(AddressContext);
 
   const vehiclePrices = {
     pickupTruck: {
@@ -158,6 +165,12 @@ const Form3 = ({ distance }) => {
       isLaborSelected,
       selectedVehicle,
       laborPrice,
+      pickupAddress: address.pickupAddress,
+      dropOffAddress: address.dropOffAddress,
+      name: formData.name,
+      phoneNum: formData.phoneNumber,
+      itemName: formData.itemName,
+      description: formData.description,
     };
 
     setSummaryData(tableData); // Update the summary data state

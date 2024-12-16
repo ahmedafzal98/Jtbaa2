@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { DeleteOutlineRounded } from "@mui/icons-material";
 import { MyContext } from "../../context/Context";
+import { FormContext } from "../../context/formContext/FormContext";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is required"),
@@ -20,8 +21,9 @@ const validationSchema = Yup.object({
 
 const FormComponent = ({ data, onChange, errors }) => {
   const { summaryData, setSummaryData } = useContext(MyContext);
+  const { setFormdata } = useContext(FormContext);
 
-  console.log(summaryData);
+  console.log(FormData);
 
   const [images, setImages] = useState([]);
 
@@ -50,7 +52,7 @@ const FormComponent = ({ data, onChange, errors }) => {
       {({ values, errors, touched, handleChange }) => {
         // Log values whenever they change
         useEffect(() => {
-          setSummaryData(values);
+          setFormdata(values);
         }, [values, setSummaryData]);
 
         return (

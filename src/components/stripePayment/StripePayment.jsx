@@ -24,6 +24,8 @@ const StripePayment = ({ totalPrice, data, required }) => {
   const elements = useElements();
 
 
+  console.log("Summary", summaryData);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -46,6 +48,7 @@ const StripePayment = ({ totalPrice, data, required }) => {
     if (error) {
       setErrorMessage(error.message);
       setIsProcessing(false);
+
       return;
     }
 
@@ -89,6 +92,12 @@ const StripePayment = ({ totalPrice, data, required }) => {
               itemPrice: "",
               stairsPrice: "",
               totalPrice: `$${summaryData.totalPrice || 0}`,
+              pickupAddress: summaryData.pickupAddress.address || "N/A",
+              dropOffAddress: summaryData.dropOffAddress.address || "N/A",
+              name: summaryData.name || "N/A",
+              phoneNum: summaryData.phoneNum || "N/A",
+              itemName: summaryData.itemName || "N/A",
+              description: summaryData.description || "N/A",
             }
           : {
               laborPrice: "",
@@ -99,6 +108,12 @@ const StripePayment = ({ totalPrice, data, required }) => {
               itemPrice: `$${summaryData.itemPrice || 0}`,
               stairsPrice: `$${summaryData.stairsPrice || 0}`,
               totalPrice: `$${summaryData.totalPrice || 0}`,
+              pickupAddress: summaryData.pickupAddress.address || "N/A",
+              dropOffAddress: summaryData.dropOffAddress.address || "N/A",
+              name: summaryData.name || "N/A",
+              phoneNum: summaryData.phoneNum || "N/A",
+              itemName: summaryData.itemName || "N/A",
+              description: summaryData.description || "N/A",
             };
 
         emailjs
